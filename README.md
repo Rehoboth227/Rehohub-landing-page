@@ -7,6 +7,8 @@ A static, responsive landing site for **Rehohub**, built from the Rehohub Brand 
 ```
 index.html              Home page: hero, about, mission/vision, services, products, contact
 services/<slug>.html    A landing page for each of the 10 subsidiaries (services)
+products/<slug>.html    A landing page for each product that has `page` data (AiPay so far)
+assets/media/<product>/ Product walkthrough videos (muted, looping) and their poster frames
 assets/css/styles.css   Design system and all styles
 assets/js/main.js       Interactions (menu, scroll reveal, rotating headline, counters)
 assets/img/             Logo, favicon and photography from the brand guidelines
@@ -32,6 +34,12 @@ Edit there, then regenerate:
 ```bash
 python3 scripts/build.py
 ```
+
+### Product pages
+
+A product gets its own page when its `PRODUCTS` entry has a `page` dict (see `AIPAY_PAGE`).
+The home-page card then links to it automatically. AiPay's yellow (`--ai-yellow`) is a campaign
+accent taken from the AiPay posters and is used only on the AiPay page.
 
 ### Product links — replace before launch
 

@@ -92,16 +92,69 @@ SUBSIDIARIES = [
                  ("Community impact", "Programmes that create lasting, measurable change.")]),
 ]
 
+# ---------------------------------------------------------------------
+# Product landing pages. A product with a `page` entry gets its own
+# products/<slug>.html. Source for AiPay: "Ai+Pay project requirement"
+# (first draft), product walkthrough videos and campaign posters.
+# ---------------------------------------------------------------------
+AIPAY_PAGE = dict(
+    email="aipay@rehohub.com",
+    headline=("Shop local.", "Sell more.", "Get paid."),
+    lead="AiPay is an e-store with an in-built payment system. Buyers find products near them, merchants get a ready-made store with customers already in it, and businesses get a payment gateway they can plug into any website.",
+    hero_video="store",
+    audiences=[
+        ("cart", "Buyers", "Shop from stores around you",
+         ["Search products within your location", "Add to cart and pay by card or bank transfer", "Track every order to your door", "Earn and spend loyalty points"]),
+        ("store", "Merchants", "Your store, without building one",
+         ["Create a verified, accredited store page", "Upload products, run discounts and promos", "Manage orders and stock in one dashboard", "Choose delivery: RehoGo, UPS or DHL"]),
+        ("code", "Businesses", "A payment gateway for your website",
+         ["Integrate AiPay into any system", "Accept and verify payments", "Track payouts and payment history", "Download receipts for every transaction"]),
+    ],
+    showcases=[
+        dict(id="store", eyebrow="For buyers", title="An e-store that knows where you are.",
+             body="Use your current location to find stores near you. Browse food and drinks, fashion, electronics and make-up, then check out in a few taps.",
+             points=["Location-based search", "Cart and order summary", "Card or bank-transfer payment", "Instant payment confirmation"],
+             video="checkout", label="AiPay store: add to cart, choose a payment method and pay"),
+        dict(id="sell", eyebrow="For merchants", title="Open your store in minutes.",
+             body="Sign up, tell us about your business, pin your location on the map and get your space verified. Once you're accredited, your products go live to buyers already shopping on AiPay.",
+             points=["Business profile and verification", "Location pinned on the map", "Financial details for payouts", "Get accredited and go live"],
+             video="onboarding", label="Merchant sign-up and profile set-up on AiPay"),
+        dict(id="dashboard", eyebrow="Merchant dashboard", title="Every order, sale and naira in one view.",
+             body="See your balance, visitors and sales at a glance. Move orders from processing to ready-to-ship to shipped, and get notified as soon as a new order comes in.",
+             points=["Balance and sales reports", "Order pipeline", "Recent transactions", "Notification settings"],
+             video="merchant-dashboard", label="AiPay merchant dashboard walkthrough"),
+        dict(id="gateway", eyebrow="Payment gateway", title="Plug AiPay into your business.",
+             body="Already have a website or app? Request the AiPay payment system and accept payments anywhere. Track transactions, verify payment status and download receipts from your gateway dashboard.",
+             points=["Transaction overview", "Success, pending and failed status", "Full payment history", "Downloadable receipts"],
+             video="gateway", label="AiPay payment gateway dashboard walkthrough"),
+    ],
+    tracking=["Order picked", "Processed", "Packed", "On route", "Delivered"],
+    delivery=[("RehoGo", "Rehohub's own delivery network, with reviews for every drop-off."),
+              ("UPS & DHL", "Merchants can choose trusted global couriers."),
+              ("Pick-up", "Collect from the store and chat with the merchant."),
+              ("Merchant delivery", "The store delivers to you directly.")],
+    campaign=dict(
+        eyebrow="AiPay for students",
+        title="From side hustle to thriving business.",
+        body="Are you a studentpreneur? Join AiPay to reach thousands of students, or shop the student market and buy at your own price.",
+        perks=["Access to 4,000+ students", "2 FREE marketing slots weekly", "Smart logistics and growth tips", "Business growth training to scale faster"],
+        stats=[("500%", "More visibility"), ("5X", "Revenue growth"), ("15,000+", "Students"), ("5★", "Delivery experience")],
+        posters=[("poster-studentpreneur.jpg", "AiPay poster: From side hustle to thriving business. 500% more visibility, 5X revenue growth."),
+                 ("poster-own-price.jpg", "AiPay poster: Buy at your own price. Spend less, buy more, with a 5-star delivery experience.")],
+    ),
+)
+
 # Product categories. Replace the URLs below with the live web-app
 # addresses and store listings as each product launches.
 PRODUCTS = [
-    dict(slug="aipay", name="AiPay", cat="Fintech · Payments", c1="#2185FF", c2="#1760BA", icon="pay",
-         desc="Smart payments for everyday Africa. Send, receive and manage money instantly with a secure digital wallet built for individuals and businesses.",
-         feats=["Instant transfers", "Bill payments", "Virtual cards", "Merchant tools"],
+    dict(slug="aipay", name="AiPay", cat="E-commerce · Payments", c1="#2185FF", c2="#1760BA", icon="cart",
+         desc="An e-store with a built-in payment system. Shop from merchants near you, open your own online store, or plug the AiPay payment gateway into your business.",
+         feats=["Local e-store", "Merchant stores", "Payment gateway", "Loyalty points"],
          web="https://aipay.rehohub.com",
          ios="https://apps.apple.com/app/aipay",
          android="https://play.google.com/store/apps/details?id=com.rehohub.aipay",
-         screen=("Wallet", "₦248,500", "Available balance")),
+         screen=("Store", "₦6,000", "Payment confirmed"),
+         page=AIPAY_PAGE),
     dict(slug="aimove", name="AiMove", cat="Mobility · Logistics", c1="#3d9bff", c2="#0c2a5e", icon="move",
          desc="Book rides, ship parcels and track deliveries in real time — powered by the RehoTrans network for safe, reliable movement.",
          feats=["Ride booking", "Parcel delivery", "Live tracking", "Fleet for business"],
@@ -150,6 +203,15 @@ def logo_icon_light(cls="logo__icon"):
             f'<g transform="translate(40 40) scale(0.95) translate(-126 -81)" fill="#1760BA">{R_PATH}</g></svg>')
 
 
+def aipay_logo(cls="ap-logo__icon"):
+    """AiPay product mark: shopping cart with a sparkle badge (from the AiPay posters)."""
+    return (f'<svg class="{cls}" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1760BA"/>'
+            '<path d="M12 18h6l5 22h20l5-15H21" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>'
+            '<circle cx="26" cy="48" r="3.6" fill="#fff"/><circle cx="40" cy="48" r="3.6" fill="#fff"/>'
+            '<circle cx="47" cy="19" r="9" fill="#FFE600" stroke="#1760BA" stroke-width="2.5"/>'
+            '<path d="M47 13.5l1.4 4.1 4.1 1.4-4.1 1.4L47 24.5l-1.4-4.1-4.1-1.4 4.1-1.4z" fill="#1760BA"/></svg>')
+
+
 def ico(name):
     s = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"'
     paths = {
@@ -167,6 +229,12 @@ def ico(name):
         "mail": '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
         "web": '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
         "check": '<path d="M20 6 9 17l-5-5"/>',
+        "cart": '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/>',
+        "store": '<path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8M10 20v-5h4v5"/>',
+        "code": '<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 4l-4 16"/>',
+        "truck": '<path d="M1 4h14v12H1zM15 9h4l4 4v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>',
+        "pin": '<path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+        "star": '<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
     }
     return f'<svg {s}>{paths[name]}</svg>'
 
@@ -228,7 +296,9 @@ def footer(base):
     home = f"{base}index.html"
     svc_links = "".join(f'<li><a href="{base}services/{s["slug"]}.html">{s["name"]}</a></li>' for s in SUBSIDIARIES[:5])
     svc_links2 = "".join(f'<li><a href="{base}services/{s["slug"]}.html">{s["name"]}</a></li>' for s in SUBSIDIARIES[5:])
-    prod_links = "".join(f'<li><a href="{p["web"]}" target="_blank" rel="noopener">{p["name"]}</a></li>' for p in PRODUCTS)
+    prod_links = "".join(
+        f'<li><a href="{base}products/{p["slug"]}.html">{p["name"]}</a></li>' if p.get("page")
+        else f'<li><a href="{p["web"]}" target="_blank" rel="noopener">{p["name"]}</a></li>' for p in PRODUCTS)
     return f'''<footer class="footer">
   <div class="container">
     <div class="footer__grid">
@@ -256,18 +326,20 @@ def footer(base):
 '''
 
 
-def cta_block():
+def cta_block(email=None, title="Your one-stop hub<br>starts here.", body=None):
+    email = email or CONTACT["email"]
+    body = body or "Partner with any Rehohub subsidiary, invest in our ecosystem or bring your next big project to life. Our team responds within one business day."
     return f'''<section class="section" id="contact">
   <div class="container">
     <div class="cta reveal">
       {r_mark("hero__ghost hero__ghost--a")}
       <div>
         <span class="eyebrow eyebrow--light">Let's build together</span>
-        <h2 style="margin-top:18px">Your one-stop hub<br>starts here.</h2>
-        <p>Partner with any Rehohub subsidiary, invest in our ecosystem or bring your next big project to life. Our team responds within one business day.</p>
+        <h2 style="margin-top:18px">{title}</h2>
+        <p>{body}</p>
       </div>
       <div class="cta__contact">
-        <a href="mailto:{CONTACT["email"]}">{ico("mail")} {CONTACT["email"]}</a>
+        <a href="mailto:{email}">{ico("mail")} {email}</a>
         <a href="{CONTACT["phone_href"]}">{ico("phone")} {CONTACT["phone"]}</a>
         <a href="https://{CONTACT["site"]}">{ico("web")} {CONTACT["site"]}</a>
       </div>
@@ -325,9 +397,10 @@ def product_card(i, p):
     return f'''<article class="prod reveal" id="{p["slug"]}" style="--c1:{p["c1"]};--c2:{p["c2"]};--d:{(i % 2) * .1:.1f}s">
         <div>
           <span class="prod__cat">{p["cat"]}</span>
-          <h3 class="prod__name"><span class="prod__icon">{ico(p["icon"])}</span>{p["name"]}</h3>
+          <h3 class="prod__name"><span class="prod__icon">{ico(p["icon"])}</span>{f'<a href="products/{p["slug"]}.html">{p["name"]}</a>' if p.get("page") else p["name"]}</h3>
           <p class="prod__desc">{escape(p["desc"])}</p>
           <ul class="prod__feats">{feats}</ul>
+          {f'<a class="prod__more" href="products/{p["slug"]}.html">Explore {p["name"]} {ico("arrow")}</a>' if p.get("page") else ""}
           <div class="prod__actions">
             <a class="store store--web" href="{p["web"]}" target="_blank" rel="noopener" aria-label="Open {p["name"]} web app">{ico("web")}<span><small>Open the</small><b>Web App</b></span></a>
             <a class="store" href="{p["ios"]}" target="_blank" rel="noopener" aria-label="Download {p["name"]} on the App Store">{APPLE}<span><small>Download on the</small><b>App Store</b></span></a>
@@ -544,9 +617,158 @@ def build_service(idx, s):
     (ROOT / "services" / f"{s['slug']}.html").write_text(html, encoding="utf-8")
 
 
+# =====================================================================
+# PRODUCT PAGES
+# =====================================================================
+
+
+def video(base, slug, name, label, cls=""):
+    src = f"{base}assets/media/{slug}/{name}"
+    return (f'<div class="browser {cls}"><div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i><span>{slug}.rehohub.com</span></div>'
+            f'<video class="browser__video" src="{src}.mp4" poster="{src}.jpg" autoplay muted loop playsinline preload="metadata" aria-label="{escape(label)}"></video></div>')
+
+
+def store_buttons(p):
+    return f'''<a class="store store--web" href="{p["web"]}" target="_blank" rel="noopener" aria-label="Open {p["name"]} web app">{ico("web")}<span><small>Open the</small><b>Web App</b></span></a>
+          <a class="store" href="{p["ios"]}" target="_blank" rel="noopener" aria-label="Download {p["name"]} on the App Store">{APPLE}<span><small>Download on the</small><b>App Store</b></span></a>
+          <a class="store" href="{p["android"]}" target="_blank" rel="noopener" aria-label="Get {p["name"]} on Google Play">{PLAY}<span><small>Get it on</small><b>Google Play</b></span></a>'''
+
+
+def build_product(p):
+    base = "../"
+    d = p["page"]
+    slug = p["slug"]
+    h1, h2, h3 = d["headline"]
+    audiences = "".join(
+        f'''<article class="tier reveal" style="--d:{i * .08:.2f}s">
+          <div class="tier__head"><span class="why__ico">{ico(ic)}</span><div><span class="tier__tag">{escape(who)}</span><h3>{escape(t)}</h3></div></div>
+          <ul class="ticks">{"".join(f"<li>{ico('check')}{escape(x)}</li>" for x in pts)}</ul>
+        </article>''' for i, (ic, who, t, pts) in enumerate(d["audiences"]))
+    showcases = "".join(
+        f'''<div class="show{' show--flip' if i % 2 else ''}" id="{sc["id"]}">
+        <div class="show__copy reveal">
+          <span class="eyebrow">{escape(sc["eyebrow"])}</span>
+          <h2 class="title bar" style="margin-top:16px">{escape(sc["title"])}</h2>
+          <p class="lead" style="margin-top:24px">{escape(sc["body"])}</p>
+          <ul class="ticks ticks--grid">{"".join(f"<li>{ico('check')}{escape(x)}</li>" for x in sc["points"])}</ul>
+        </div>
+        <div class="show__media reveal" style="--d:.1s">{video(base, slug, sc["video"], sc["label"])}</div>
+      </div>''' for i, sc in enumerate(d["showcases"]))
+    track = "".join(f'<li class="reveal" style="--d:{i * .1:.1f}s"><span>{i + 1}</span>{escape(t)}</li>' for i, t in enumerate(d["tracking"]))
+    deliv = "".join(f'<div class="deliv reveal" style="--d:{i * .08:.2f}s"><h4>{escape(a)}</h4><p>{escape(b)}</p></div>' for i, (a, b) in enumerate(d["delivery"]))
+    c = d["campaign"]
+    stats = "".join(f'<div class="ystat"><strong>{escape(a)}</strong><span>{escape(b)}</span></div>' for a, b in c["stats"])
+    perks = "".join(f"<li>{ico('check')}{escape(x)}</li>" for x in c["perks"])
+    posters = "".join(
+        f'<figure class="poster reveal" style="--d:{i * .12:.2f}s"><img src="{base}assets/img/{slug}/{f}" alt="{escape(alt)}" loading="lazy" width="1080" height="1350"></figure>'
+        for i, (f, alt) in enumerate(c["posters"]))
+
+    html = head(f"{p['name']} — {h1} {h2} {h3} | Rehohub", d["lead"], base)
+    html += header(base)
+    html += f'''<main id="main" class="product-page">
+<section class="p-hero">
+  {r_mark("hero__ghost hero__ghost--a")}
+  <div class="hero__glow"></div><div class="hero__grid"></div>
+  <div class="container p-hero__inner">
+    <div class="p-hero__copy">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="{base}index.html">Rehohub</a><span>/</span><a href="{base}index.html#products">Products</a><span>/</span><span aria-current="page">{p["name"]}</span></nav>
+      <div class="ap-logo reveal">{aipay_logo()}<span>{p["name"]}</span><em>{escape(p["cat"])}</em></div>
+      <h1 class="reveal" style="--d:.08s">{h1}<br>{h2}<br><span class="hl">{h3}</span></h1>
+      <p class="hero__lead reveal" style="--d:.16s">{escape(d["lead"])}</p>
+      <div class="hero__ctas reveal" style="--d:.24s">
+        <a class="btn btn--yellow" href="{p["web"]}" target="_blank" rel="noopener">Start shopping {ico("arrow")}</a>
+        <a class="btn btn--ghost" href="#sell">Open a store</a>
+        <a class="btn btn--ghost" href="#gateway">Payment gateway</a>
+      </div>
+    </div>
+    <div class="p-hero__media reveal" style="--d:.2s">
+      {video(base, slug, d["hero_video"], "AiPay store walkthrough")}
+      <div class="float-chip float-chip--a">{ico("pin")} Stores near you</div>
+      <div class="float-chip float-chip--b"><b>₦6,000</b> Payment confirmed ✓</div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint" id="who">
+  <div class="container">
+    <div class="section__head section__head--split">
+      <div class="reveal"><span class="eyebrow">Built for everyone</span><h2 class="title bar" style="margin-top:16px">One platform,<br>three ways to use it.</h2></div>
+      <p class="lead reveal" style="--d:.1s">Whether you're buying, selling or taking payments on your own site, AiPay links you to the same network of customers, merchants and delivery partners.</p>
+    </div>
+    <div class="tiers">{audiences}</div>
+  </div>
+</section>
+
+<section class="section shows">
+  <div class="container">{showcases}</div>
+</section>
+
+<section class="section products-wrap" id="delivery">
+  {r_mark("hero__ghost hero__ghost--a")}
+  <div class="container">
+    <div class="section__head" style="text-align:center;justify-items:center">
+      <span class="eyebrow eyebrow--light reveal">Delivery and tracking</span>
+      <h2 class="title title--light bar bar--light bar--center reveal" style="--d:.08s">Follow your order<br>all the way home.</h2>
+    </div>
+    <ol class="track">{track}</ol>
+    <div class="delivs">{deliv}</div>
+  </div>
+</section>
+
+<section class="section" id="loyalty">
+  <div class="container loyal">
+    <div class="loyal__card reveal" aria-hidden="true">
+      <div class="loyal__top">{aipay_logo("loyal__logo")}<span>AiPay Rewards</span></div>
+      <div class="loyal__pts"><small>Loyalty points</small><strong>2,450</strong></div>
+      <div class="loyal__bot"><span>Ade Johnson</span><span>Member since 2025</span></div>
+    </div>
+    <div class="reveal" style="--d:.1s">
+      <span class="eyebrow">Loyalty</span>
+      <h2 class="title bar" style="margin-top:16px">Every purchase pays you back.</h2>
+      <p class="lead" style="margin-top:24px">Create an account and get a personal profile with your own loyalty card. Earn points every time you buy, then spend them on your next order.</p>
+      <ul class="ticks" style="margin-top:24px"><li>{ico("check")}Points on every purchase</li><li>{ico("check")}Redeem points at checkout</li><li>{ico("check")}Review stores and deliveries</li><li>{ico("check")}Updates at every order stage</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="section campaign" id="students">
+  <div class="container campaign__inner">
+    <div class="campaign__copy reveal">
+      <span class="eyebrow eyebrow--light">{escape(c["eyebrow"])}</span>
+      <h2 class="title title--light" style="margin-top:16px">{escape(c["title"])}</h2>
+      <p class="lead" style="margin-top:20px;color:rgba(255,255,255,.85)">{escape(c["body"])}</p>
+      <div class="ystats">{stats}</div>
+      <ul class="ticks ticks--light">{perks}</ul>
+      <div class="hero__ctas"><a class="btn btn--yellow" href="{p["web"]}" target="_blank" rel="noopener">Join AiPay {ico("arrow")}</a></div>
+    </div>
+    <div class="posters">{posters}</div>
+  </div>
+</section>
+
+<section class="section" id="download" style="padding-bottom:0">
+  <div class="container">
+    <div class="dl reveal">
+      <div>{aipay_logo("dl__logo")}</div>
+      <div><h2>Get {p["name"]} on any device.</h2><p>Open it in your browser or download the mobile app for iOS and Android.</p></div>
+      <div class="prod__actions" style="--c1:{p["c1"]};--c2:{p["c2"]}">{store_buttons(p)}</div>
+    </div>
+  </div>
+</section>
+
+{cta_block(d["email"], "Talk to the<br>AiPay team.", "Questions about selling on AiPay, the payment gateway or a student partnership? Write to us and we'll get back to you.")}
+</main>
+'''
+    html += footer(base)
+    (ROOT / "products").mkdir(exist_ok=True)
+    (ROOT / "products" / f"{slug}.html").write_text(html, encoding="utf-8")
+
+
 if __name__ == "__main__":
     (ROOT / "services").mkdir(exist_ok=True)
     build_index()
     for i, s in enumerate(SUBSIDIARIES):
         build_service(i, s)
+    for p in PRODUCTS:
+        if p.get("page"):
+            build_product(p)
     print(f"Built index.html and {len(SUBSIDIARIES)} service pages.")
