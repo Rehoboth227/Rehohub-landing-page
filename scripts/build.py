@@ -186,6 +186,27 @@ GREENFED_PAGE = dict(
              ("Poor quality?", "We recall it and resupply, fast.")],
 )
 
+# AiMove content comes from the AiMove Android app (github.com/Rehoboth227/Aimove,
+# app name "REHOMOVE"): its screens, PricingEngine and API logs.
+AIMOVE_PAGE = dict(
+    kind="aimove",
+    email=None,  # no AiMove address provided yet; falls back to info@rehohub.com
+    lead="AiMove connects businesses and individuals with verified riders for fast, safe package delivery. You get a guaranteed price upfront, live GPS tracking and a wallet for paying, all in one app.",
+    types=[("Instant express", "Picked up right away for urgent deliveries.", "+₦300"),
+           ("Same-day", "Delivered today, at the standard rate.", "Standard"),
+           ("Scheduled", "Choose a pickup date and time slot in advance.", "Plan ahead")],
+    business=["Send a package in a few taps", "Book a rider in your area", "Schedule future pickups", "Track your item live on the map",
+              "Chat with your rider", "Rate every delivery"],
+    stages=[("Requested", "Your order is sent to riders nearby."), ("Picked up", "A verified rider collects your package."),
+            ("In transit", "Follow it live with GPS and an ETA."), ("Delivered", "Confirmed with the recipient's 4-digit PIN.")],
+    rider=["Accept nearby orders, filtered by payout or express", "Built-in GPS navigation", "Chat with the customer",
+           "Proof of delivery with the customer PIN", "Track earnings, trips and rating", "Withdraw to your bank account"],
+    wallet=[("Fund your wallet", "Top up with saved debit or credit cards."), ("Every naira tracked", "Search all credits and debits in your history."),
+            ("PDF statements", "Export statements for your records."), ("Refer & earn", "Get a ₦500 bonus for each friend you invite.")],
+    trust=[("Verified riders", "Driver's licence, vehicle and plate number on every profile."), ("Biometric login", "Fingerprint or Face ID sign-in."),
+           ("Ratings & reviews", "Rate riders after every delivery."), ("Dispute protection", "PIN-confirmed delivery protects both sides.")],
+)
+
 # Product categories. Replace the URLs below with the live web-app
 # addresses and store listings as each product launches.
 PRODUCTS = [
@@ -197,13 +218,14 @@ PRODUCTS = [
          android="https://play.google.com/store/apps/details?id=com.rehohub.aipay",
          screen=("Store", "₦6,000", "Payment confirmed"),
          page=AIPAY_PAGE),
-    dict(slug="aimove", name="AiMove", cat="Mobility · Logistics", c1="#3d9bff", c2="#0c2a5e", icon="move",
-         desc="Book rides, ship parcels and track deliveries in real time — powered by the RehoTrans network for safe, reliable movement.",
-         feats=["Ride booking", "Parcel delivery", "Live tracking", "Fleet for business"],
+    dict(slug="aimove", name="AiMove", cat="Logistics · Delivery", c1="#3d7bff", c2="#0c2a5e", icon="move",
+         desc="Fast, safe package delivery. Get a guaranteed price upfront, book a verified rider, track your package live and pay from your wallet. Built for businesses, riders and developers.",
+         feats=["Instant & same-day", "Scheduled pickups", "Live GPS tracking", "Delivery API"],
          web="https://aimove.rehohub.com",
          ios="https://apps.apple.com/app/aimove",
          android="https://play.google.com/store/apps/details?id=com.rehohub.aimove",
-         screen=("Trip", "12 min", "Driver arriving")),
+         screen=("Tracking", "12 min", "Rider on the way"),
+         page=AIMOVE_PAGE),
     dict(slug="airise", name="AiRise", cat="EdTech · Careers", c1="#5aa9ff", c2="#1760BA", icon="rise",
          desc="Learn in-demand skills, get mentored by experts and grow your career or business — the digital home of Rheti training.",
          feats=["Courses", "Mentorship", "Certificates", "Job board"],
@@ -281,6 +303,11 @@ def ico(name):
         "sprout": '<path d="M12 22V11"/><path d="M12 11C12 7 9 4 4 4c0 4 3 7 8 7zM12 13c0-4 3-7 8-7 0 4-3 7-8 7z"/>',
         "heart": '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
         "plan": '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+        "bike": '<circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h3l2 6M5.5 17.5 9 10h6l3.5 7.5M9 10 7 6H4"/>',
+        "clock": '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+        "calendar": '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+        "wallet": '<path d="M20 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15v13H5a2 2 0 0 1-2-2V5"/><circle cx="16" cy="13.5" r="1.5"/>',
+        "lock": '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
         "star": '<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
     }
     return f'<svg {s}>{paths[name]}</svg>'
@@ -686,6 +713,8 @@ def store_buttons(p):
 def build_product(p):
     if p["page"].get("kind") == "greenfed":
         return build_greenfed(p)
+    if p["page"].get("kind") == "aimove":
+        return build_aimove(p)
     base = "../"
     d = p["page"]
     slug = p["slug"]
@@ -963,6 +992,196 @@ def build_greenfed(p):
 </section>
 
 {cta_block(d["email"], "Healthy people.<br>Stronger communities.", "Questions about meal plans, deliveries or joining the GreenFed team? Call or write to us.", d["phone"])}
+</main>
+'''
+    html += footer(base)
+    (ROOT / "products").mkdir(exist_ok=True)
+    (ROOT / "products" / f"{slug}.html").write_text(html, encoding="utf-8")
+
+
+def am_phone(inner, cls=""):
+    return f'<div class="am-phone {cls}" aria-hidden="true"><div class="am-phone__screen">{inner}</div></div>'
+
+
+def build_aimove(p):
+    base = "../"
+    d = p["page"]
+    slug = p["slug"]
+    img = f"{base}assets/img/{slug}"
+    tick = lambda xs: "".join(f"<li>{ico('check')}{escape(x)}</li>" for x in xs)
+    type_icons = ["bike", "clock", "calendar"]
+    types = "".join(f'<div class="am-type reveal" style="--d:{i * .08:.2f}s"><span class="why__ico">{ico(type_icons[i])}</span><div><h3>{escape(a)} <em>{escape(c)}</em></h3><p>{escape(b)}</p></div></div>' for i, (a, b, c) in enumerate(d["types"]))
+    stages = "".join(f'<li class="reveal" style="--d:{i * .1:.1f}s"><span>{i + 1}</span><h4>{escape(a)}</h4><p>{escape(b)}</p></li>' for i, (a, b) in enumerate(d["stages"]))
+    wallet = "".join(f'<div class="pillar"><h4>{escape(a)}</h4><p>{escape(b)}</p></div>' for a, b in d["wallet"])
+    trust_icons = ["shield", "lock", "star", "check"]
+    trust = "".join(f'<div class="why__item reveal" style="--d:{i * .08:.2f}s"><div class="why__ico">{ico(trust_icons[i])}</div><h3>{escape(a)}</h3><p>{escape(b)}</p></div>' for i, (a, b) in enumerate(d["trust"]))
+
+    track_phone = am_phone(f'''
+      <div class="am-map"><svg viewBox="0 0 200 220" preserveAspectRatio="xMidYMid slice"><defs><pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#dbe6ff" stroke-width="1"/></pattern></defs>
+        <rect width="200" height="220" fill="#eef4ff"/><rect width="200" height="220" fill="url(#g)"/>
+        <path d="M-10 150 Q60 120 90 160 T210 130" stroke="#fff" stroke-width="14" fill="none"/><path d="M60 -10 Q80 80 50 230" stroke="#fff" stroke-width="10" fill="none"/>
+        <path class="am-route" d="M40 185 C70 150 60 110 100 100 S150 60 160 35" stroke="#0256FF" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="6 6"/>
+        <circle cx="40" cy="185" r="7" fill="#0256FF"/><circle cx="160" cy="35" r="9" fill="#fff" stroke="#0256FF" stroke-width="4"/>
+        <g class="am-rider"><circle r="11" fill="#0256FF"/><circle r="4" fill="#fff"/></g></svg>
+        <span class="am-live">● LIVE</span></div>
+      <div class="am-sheet"><div class="am-sheet__row"><div><small>Est. arrival</small><b>12 mins away</b></div><span class="am-chip">IN TRANSIT</span></div>
+        <div class="am-rider-card"><span class="am-avatar">JJ</span><div><b>John Joshua</b><small>TVS Motorcycle · 4.9 ★</small></div><span class="am-msg">{ico("phone")}</span></div></div>''', "am-phone--hero")
+
+    send_phone = am_phone(f'''
+      <div class="am-app-head"><small>Hello Ken 👋</small><b>What would you like to do?</b></div>
+      <div class="am-actions"><div class="on">{ico("move")}<b>Send a package</b></div><div>{ico("bike")}<b>Book a rider</b></div><div>{ico("wallet")}<b>Fund wallet</b></div><div>{ico("calendar")}<b>Schedule</b></div></div>
+      <div class="am-fare"><small>Automated upfront fare</small><b>₦3,120</b><span>Guaranteed price</span></div>
+      <div class="am-transit"><span class="am-dot"></span><div><b>Package in transit</b><small>Your rider is on the way</small></div></div>''')
+
+    rider_phone = am_phone(f'''
+      <div class="am-earn"><small>Available earnings</small><b>₦24,800</b><div class="am-earn__stats"><span><b>8</b>Trips today</span><span><b>4.9★</b>Rating</span><span><b>96%</b>Acceptance</span></div></div>
+      <div class="am-filters"><span class="on">All (6)</span><span>High payout</span><span>Express</span></div>
+      <div class="am-order"><div><span class="am-tag">EXPRESS</span><b>Ikeja → Lekki</b><small>2.8 km · 8 mins</small></div><strong>₦3,950</strong></div>
+      <div class="am-order"><div><span class="am-tag am-tag--alt">SAME DAY</span><b>Yaba → Surulere</b><small>5.1 km · 15 mins</small></div><strong>₦2,410</strong></div>
+      <div class="am-accept">Accept order &amp; start pickup</div>''')
+
+    html = head(f"{p['name']}: send it, track it, done | Rehohub", d["lead"], base)
+    html += header(base)
+    html += f'''<main id="main" class="product-page theme-am">
+<section class="p-hero am-hero">
+  {r_mark("hero__ghost hero__ghost--a")}
+  <div class="hero__glow"></div><div class="hero__grid"></div>
+  <div class="container p-hero__inner">
+    <div class="p-hero__copy">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="{base}index.html">Rehohub</a><span>/</span><a href="{base}index.html#products">Products</a><span>/</span><span aria-current="page">{p["name"]}</span></nav>
+      <div class="ap-logo reveal"><img class="am-logo" src="{img}/mark-white.png" alt="" width="399" height="400"><span>{p["name"]}</span><em>{escape(p["cat"])}</em></div>
+      <h1 class="reveal" style="--d:.08s">Send it.<br>Track it.<br><span class="hl-am">Done.</span></h1>
+      <p class="hero__lead reveal" style="--d:.16s">{escape(d["lead"])}</p>
+      <div class="hero__ctas reveal" style="--d:.24s">
+        <a class="btn btn--white" href="{p["web"]}" target="_blank" rel="noopener">Send a package {ico("arrow")}</a>
+        <a class="btn btn--ghost" href="#fare">Check a price</a>
+        <a class="btn btn--ghost" href="#riders">Ride with us</a>
+      </div>
+    </div>
+    <div class="p-hero__media am-hero__media reveal" style="--d:.2s">
+      {track_phone}
+      <div class="float-chip float-chip--a">{ico("shield")} Guaranteed upfront price</div>
+      <div class="float-chip am-chip-b">{ico("pin")} Live GPS tracking</div>
+    </div>
+  </div>
+</section>
+
+<section class="am-types-wrap"><div class="container am-types">{types}</div></section>
+
+<section class="section" id="business">
+  <div class="container show">
+    <div class="show__copy reveal">
+      <span class="eyebrow">For businesses and individuals</span>
+      <h2 class="title bar" style="margin-top:16px">Deliveries, sorted from your phone.</h2>
+      <p class="lead" style="margin-top:24px">Add your pickup and drop-off, describe the package, and see the price before you pay. Then follow it to the door. Business accounts can add their CAC/RC number and a default pickup address.</p>
+      <ul class="ticks ticks--grid">{tick(d["business"])}</ul>
+    </div>
+    <div class="show__media am-center reveal" style="--d:.1s">{send_phone}</div>
+  </div>
+</section>
+
+<section class="section section--tint" id="fare">
+  <div class="container">
+    <div class="section__head section__head--split">
+      <div class="reveal"><span class="eyebrow">Fare estimator</span><h2 class="title bar" style="margin-top:16px">Know the price<br>before you book.</h2></div>
+      <p class="lead reveal" style="--d:.1s">AiMove works out your fare from distance and weight, and you always see the total before you pay. Try it below.</p>
+    </div>
+    <div class="fare reveal" data-fare>
+      <form class="fare__form" onsubmit="return false">
+        <label>Distance <output data-out="km">14.5 km</output><input type="range" name="km" min="1" max="60" step="0.5" value="14.5"></label>
+        <label>Package weight <output data-out="kg">5 kg</output><input type="range" name="kg" min="1" max="80" step="1" value="5"></label>
+        <fieldset><legend>Delivery type</legend>
+          <label class="seg"><input type="radio" name="type" value="SAME_DAY" checked><span>Same-day</span></label>
+          <label class="seg"><input type="radio" name="type" value="INSTANT"><span>Instant express</span></label>
+        </fieldset>
+        <label class="switch"><input type="checkbox" name="peak"><span></span>Peak hours (7–10 am, 5–8 pm)</label>
+      </form>
+      <div class="fare__out" aria-live="polite">
+        <small>Estimated upfront fare</small>
+        <strong data-out="total">₦2,540</strong>
+        <ul>
+          <li><span>Base booking fee</span><b>₦800</b></li>
+          <li><span data-out="ratelabel">Distance (₦120/km, light parcel)</span><b data-out="dist">₦1,740</b></li>
+          <li><span>Peak-hour surge</span><b data-out="peak">₦0</b></li>
+          <li><span>Instant express</span><b data-out="express">₦0</b></li>
+        </ul>
+        <p>Rates per km: ₦120 up to 5 kg, ₦160 up to 20 kg, ₦220 up to 50 kg, ₦300 above 50 kg. This is an estimate; the app confirms your exact price before payment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tracking">
+  <div class="container">
+    <div class="section__head" style="text-align:center;justify-items:center">
+      <span class="eyebrow reveal">Live tracking</span>
+      <h2 class="title bar bar--center reveal" style="--d:.08s">Follow every step.</h2>
+    </div>
+    <ol class="am-stages">{stages}</ol>
+  </div>
+</section>
+
+<section class="section products-wrap" id="riders">
+  {r_mark("hero__ghost hero__ghost--a")}
+  <div class="container show show--flip">
+    <div class="show__copy reveal">
+      <span class="eyebrow eyebrow--light">For riders</span>
+      <h2 class="title title--light bar bar--light" style="margin-top:16px">Ride, deliver, get paid.</h2>
+      <p class="lead" style="margin-top:24px;color:rgba(255,255,255,.82)">Join AiMove as a rider and pick up orders near you. You'll see each payout before you accept, and you can withdraw your earnings straight to your bank account.</p>
+      <ul class="ticks ticks--light ticks--grid">{tick(d["rider"])}</ul>
+      <div class="hero__ctas"><a class="btn btn--white" href="{p["web"]}" target="_blank" rel="noopener">Become a rider {ico("arrow")}</a></div>
+    </div>
+    <div class="show__media am-center reveal" style="--d:.1s">{rider_phone}</div>
+  </div>
+</section>
+
+<section class="section" id="wallet">
+  <div class="container about" style="align-items:start">
+    <div class="reveal">
+      <span class="eyebrow">Wallet &amp; payments</span>
+      <h2 class="title bar" style="margin-top:16px">Pay from your AiMove wallet.</h2>
+      <p class="lead" style="margin-top:24px">Pay for deliveries with your wallet or a card. Save several cards and bank accounts, and keep track of every transaction.</p>
+      <div class="pillars">{wallet}</div>
+    </div>
+    <div class="reveal" style="--d:.1s" id="api">
+      <span class="eyebrow">For developers</span>
+      <h2 class="title bar" style="margin-top:16px">Plug deliveries into your platform.</h2>
+      <p class="lead" style="margin-top:24px">Add AiMove to your own systems with the delivery API, and get status updates through webhooks.</p>
+      <pre class="code" aria-label="Example API request"><code><span class="c-k">POST</span> /api/v1/deliveries/create
+{{ <span class="c-s">"origin"</span>: <span class="c-v">"Lagos"</span>, <span class="c-s">"dest"</span>: <span class="c-v">"Abuja"</span>, <span class="c-s">"weight"</span>: <span class="c-n">5.0</span> }}
+
+<span class="c-m">→ 201</span> {{ <span class="c-s">"status"</span>: <span class="c-v">"CREATED"</span>, <span class="c-s">"id"</span>: <span class="c-v">"pkg_1"</span> }}
+
+<span class="c-k">GET</span>  /api/v1/deliveries/{{tracking}}/track
+<span class="c-m">→ 200</span> {{ <span class="c-s">"status"</span>: <span class="c-v">"IN_TRANSIT"</span>, <span class="c-s">"eta"</span>: <span class="c-v">"25 mins"</span> }}
+
+<span class="c-k">WEBHOOK</span> /api/v1/webhooks/status_update</code></pre>
+      <ul class="ticks" style="margin-top:20px"><li>{ico("check")}Admins assign riders and see live GPS</li><li>{ico("check")}Real-time performance reports, exportable as PDF</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint">
+  <div class="container">
+    <div class="section__head" style="text-align:center;justify-items:center">
+      <span class="eyebrow reveal">Safety and trust</span>
+      <h2 class="title bar bar--center reveal" style="--d:.08s">Safe hands, every trip.</h2>
+    </div>
+    <div class="why">{trust}</div>
+  </div>
+</section>
+
+<section class="section" id="download" style="padding-bottom:0">
+  <div class="container">
+    <div class="dl reveal">
+      <div><img class="dl__logo am-dl-logo" src="{img}/mark-white.png" alt="" width="399" height="400"></div>
+      <div><h2>Get {p["name"]} on any device.</h2><p>Send packages, ride and manage deliveries on the web or on your phone.</p></div>
+      <div class="prod__actions" style="--c1:#3d7bff;--c2:#0256FF">{store_buttons(p)}</div>
+    </div>
+  </div>
+</section>
+
+{cta_block(d["email"], "Move anything,<br>anywhere.", "Questions about business deliveries, becoming a rider or the AiMove API? Our team is here to help.")}
 </main>
 '''
     html += footer(base)

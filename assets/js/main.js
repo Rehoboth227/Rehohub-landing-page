@@ -63,3 +63,32 @@
   // Current year
   document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 })();
+
+/* AiMove fare estimator — mirrors PricingEngine.kt in the AiMove app */
+(() => {
+  const root = document.querySelector('[data-fare]');
+  if (!root) return;
+  const BASE = 800, PEAK = 350, EXPRESS = 300;
+  const tiers = [[5, 120, 'light parcel'], [20, 160, 'medium cargo'], [50, 220, 'heavy freight'], [Infinity, 300, 'extra heavy']];
+  const ngn = (n) => '₦' + Math.round(n).toLocaleString('en-NG');
+  const out = (k) => root.querySelector(`[data-out="${k}"]`);
+  const form = root.querySelector('form');
+  const update = () => {
+    const km = +form.km.value, kg = +form.kg.value;
+    const [, rate, label] = tiers.find(([max]) => kg <= max);
+    const dist = km * rate;
+    const peak = form.peak.checked ? PEAK : 0;
+    const express = form.type.value === 'INSTANT' ? EXPRESS : 0;
+    out('km').textContent = km + ' km';
+    out('kg').textContent = kg + ' kg';
+    out('ratelabel').textContent = `Distance (₦${rate}/km, ${label})`;
+    out('dist').textContent = ngn(dist);
+    out('peak').textContent = ngn(peak);
+    out('express').textContent = ngn(express);
+    out('total').textContent = ngn(BASE + dist + peak + express);
+  };
+  const h = new Date().getHours();
+  form.peak.checked = (h >= 7 && h <= 9) || (h >= 17 && h <= 19);
+  form.addEventListener('input', update);
+  update();
+})();

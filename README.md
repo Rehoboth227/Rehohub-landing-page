@@ -7,7 +7,7 @@ A static, responsive landing site for **Rehohub**, built from the Rehohub Brand 
 ```
 index.html              Home page: hero, about, mission/vision, services, products, contact
 services/<slug>.html    A landing page for each of the 10 subsidiaries (services)
-products/<slug>.html    A landing page for each product that has `page` data (AiPay, GreenFed)
+products/<slug>.html    A landing page for each product that has `page` data (AiPay, GreenFed, AiMove)
 assets/media/<product>/ Product walkthrough videos (muted, looping) and their poster frames
 assets/css/styles.css   Design system and all styles
 assets/js/main.js       Interactions (menu, scroll reveal, rotating headline, counters)
@@ -39,7 +39,9 @@ python3 scripts/build.py
 
 A product gets its own page when its `PRODUCTS` entry has a `page` dict (see `AIPAY_PAGE`).
 The home-page card then links to it automatically. AiPay's yellow (`--ai-yellow`) is a campaign
-accent taken from the AiPay posters and is used only on the AiPay page. GreenFed uses its own greens (`.theme-gf`) from the GreenFed logo, with Kaushan Script for its handwritten accents.
+accent taken from the AiPay posters and is used only on the AiPay page. GreenFed uses its own greens (`.theme-gf`) from the GreenFed logo, with Kaushan Script for its handwritten accents. AiMove content comes from the AiMove Android app
+(github.com/Rehoboth227/Aimove); its fare estimator in `assets/js/main.js` mirrors the app's `PricingEngine.kt`,
+so update both if pricing changes.
 
 ### Product links — replace before launch
 
