@@ -8,11 +8,14 @@ A static, responsive landing site for **Rehohub**, built from the Rehohub Brand 
 index.html              Home page: hero, about, mission/vision, services, products, contact
 services/<slug>.html    A landing page for each of the 10 subsidiaries (services)
 products/<slug>.html    A landing page for each product that has `page` data (AiPay, GreenFed, AiMove)
+products/airise/        The AiRise mini-site (HR and employability): 9 section pages + 9 course pages
 assets/media/<product>/ Product walkthrough videos (muted, looping) and their poster frames
 assets/css/styles.css   Design system and all styles
 assets/js/main.js       Interactions (menu, scroll reveal, rotating headline, counters)
 assets/img/             Logo, favicon and photography from the brand guidelines
-scripts/build.py        Generator for index.html and services/*.html
+scripts/build.py        Generator for index.html, services/*.html and products/*.html
+scripts/airise.py       Generator for the AiRise mini-site (called by build.py)
+assets/js/airise.js     AiRise course filter, result calculator, certificate reader, checklist
 ```
 
 ## Brand application
@@ -56,3 +59,13 @@ No build step is needed to view the site. Open `index.html` in a browser, or run
 ```bash
 python3 -m http.server 8000
 ```
+
+## AiRise mini-site
+
+AiRise is built as an HR company site rather than a single page. Its content lives in `scripts/airise.py`
+(courses, journey, HR services, platform modules, delivery options) and comes from the AiRise documents:
+Executive Summary, Draft A requirements, Programme Overview, Assessment Pack and Certificates.
+
+The Assessment Pack is the **facilitator edition**: only its structure and rules (marks, timings, pass marks,
+result bands, re-sits, appeals, integrity) are published. Answer keys, model answers and marking guides are
+deliberately left out and must stay private.

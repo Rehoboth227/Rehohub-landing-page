@@ -226,13 +226,14 @@ PRODUCTS = [
          android="https://play.google.com/store/apps/details?id=com.rehohub.aimove",
          screen=("Tracking", "12 min", "Rider on the way"),
          page=AIMOVE_PAGE),
-    dict(slug="airise", name="AiRise", cat="EdTech · Careers", c1="#5aa9ff", c2="#1760BA", icon="rise",
-         desc="Learn in-demand skills, get mentored by experts and grow your career or business — the digital home of Rheti training.",
-         feats=["Courses", "Mentorship", "Certificates", "Job board"],
-         web="https://airise.rehohub.com",
+    dict(slug="airise", name="AiRise", cat="HR · Employability", c1="#D4A12A", c2="#0D2357", icon="rise",
+         desc="An HR company built around the employability journey. Train with the nine-course Employability Skills Series, get assessed and ranked, and get matched with employers. Organisations get HR services on demand.",
+         feats=["Employability training", "Talent matching", "Certificates", "HR services"],
+         web="https://www.airise.com.ng/signup",
          ios="https://apps.apple.com/app/airise",
          android="https://play.google.com/store/apps/details?id=com.rehohub.airise",
-         screen=("My learning", "78%", "Course progress")),
+         screen=("My learning", "6 / 9", "Courses complete"),
+         href="products/airise/index.html"),
     dict(slug="greenfed", name="GreenFed", cat="Food · Nutrition", c1="#7cc242", c2="#0a4a26", icon="leaf",
          desc="Fresh food, smarter you. Personal meal plans from nutritionists, farm-fresh groceries delivered weekly, and a community for healthier living.",
          feats=["Meal planning", "Weekly groceries", "Food boxes", "Health community"],
@@ -308,6 +309,14 @@ def ico(name):
         "calendar": '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
         "wallet": '<path d="M20 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15v13H5a2 2 0 0 1-2-2V5"/><circle cx="16" cy="13.5" r="1.5"/>',
         "lock": '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+        "user": '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+        "id": '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17a3.5 3.5 0 0 1 7 0M15 9h3M15 13h3"/>',
+        "book": '<path d="M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z"/>',
+        "chat": '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+        "briefcase": '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M2 13h20"/>',
+        "refresh": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+        "search": '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+        "chart": '<path d="M3 3v18h18"/><path d="M7 16v-5M12 16V8M17 16v-8"/>',
         "star": '<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
     }
     return f'<svg {s}>{paths[name]}</svg>'
@@ -371,7 +380,7 @@ def footer(base):
     svc_links = "".join(f'<li><a href="{base}services/{s["slug"]}.html">{s["name"]}</a></li>' for s in SUBSIDIARIES[:5])
     svc_links2 = "".join(f'<li><a href="{base}services/{s["slug"]}.html">{s["name"]}</a></li>' for s in SUBSIDIARIES[5:])
     prod_links = "".join(
-        f'<li><a href="{base}products/{p["slug"]}.html">{p["name"]}</a></li>' if p.get("page")
+        f'<li><a href="{base}{p.get("href") or "products/" + p["slug"] + ".html"}">{p["name"]}</a></li>' if p.get("page") or p.get("href")
         else f'<li><a href="{p["web"]}" target="_blank" rel="noopener">{p["name"]}</a></li>' for p in PRODUCTS)
     return f'''<footer class="footer">
   <div class="container">
@@ -473,10 +482,10 @@ def product_card(i, p):
     return f'''<article class="prod reveal" id="{p["slug"]}" style="--c1:{p["c1"]};--c2:{p["c2"]};--d:{(i % 2) * .1:.1f}s">
         <div>
           <span class="prod__cat">{p["cat"]}</span>
-          <h3 class="prod__name"><span class="prod__icon">{ico(p["icon"])}</span>{f'<a href="products/{p["slug"]}.html">{p["name"]}</a>' if p.get("page") else p["name"]}</h3>
+          <h3 class="prod__name"><span class="prod__icon">{ico(p["icon"])}</span>{f'<a href="{p.get("href") or "products/" + p["slug"] + ".html"}">{p["name"]}</a>' if p.get("page") or p.get("href") else p["name"]}</h3>
           <p class="prod__desc">{escape(p["desc"])}</p>
           <ul class="prod__feats">{feats}</ul>
-          {f'<a class="prod__more" href="products/{p["slug"]}.html">Explore {p["name"]} {ico("arrow")}</a>' if p.get("page") else ""}
+          {f'<a class="prod__more" href="{p.get("href") or "products/" + p["slug"] + ".html"}">Explore {p["name"]} {ico("arrow")}</a>' if p.get("page") or p.get("href") else ""}
           <div class="prod__actions">
             <a class="store store--web" href="{p["web"]}" target="_blank" rel="noopener" aria-label="Open {p["name"]} web app">{ico("web")}<span><small>Open the</small><b>Web App</b></span></a>
             <a class="store" href="{p["ios"]}" target="_blank" rel="noopener" aria-label="Download {p["name"]} on the App Store">{APPLE}<span><small>Download on the</small><b>App Store</b></span></a>
@@ -1197,4 +1206,6 @@ if __name__ == "__main__":
     for p in PRODUCTS:
         if p.get("page"):
             build_product(p)
+    import airise
+    print(f"Built {airise.build(globals())} AiRise pages.")
     print(f"Built index.html and {len(SUBSIDIARIES)} service pages.")
