@@ -144,6 +144,48 @@ AIPAY_PAGE = dict(
     ),
 )
 
+GREENFED_PAGE = dict(
+    kind="greenfed",
+    email="greenfed@rehohub.com",
+    phone="+234 810 541 2715",
+    tagline="Fresh food. Smarter you.",
+    lead="GreenFed bridges the gap between people and good nutrition. Nutritionists build meal plans around your calorie and health needs, farm-fresh groceries arrive at your door every week, and a supportive community helps you stay on track.",
+    pillars=[("leaf", "Nutritious choices", "Fuel your body with the best."),
+             ("tag", "Affordable prices", "Healthy food for every budget."),
+             ("truck", "Convenient delivery", "Freshness, right to your doorstep."),
+             ("sprout", "Quality assured", "Carefully sourced. Always fresh.")],
+    steps=[("Register", "Sign up with email or Google / Facebook and verify your account in one click."),
+           ("Tell us about you", "Add your household, ages, health status and allergies."),
+           ("Get your meal plan", "A nutritionist builds a dynamic plan around your calorie and health needs."),
+           ("Receive it in 48 hours", "Your plan arrives by e-copy in your email and in the app."),
+           ("Order fresh groceries", "Shop straight from your meal plan, or by preference."),
+           ("Weekly delivery", "Farm-fresh produce delivered to your door every week.")],
+    meal=dict(
+        title="Meal plans made for your body.",
+        body="Request a plan for yourself or for everyone at home, including family members with special needs. Each plan is built on calorie needs and is dynamic, so it changes as you do.",
+        points=["Calorie and health-need based", "Multiple plans per household", "Pay by card or bank transfer", "See which nutritionist picked up your plan", "Delivered in under 48 hours", "Review every plan"]),
+    grocery=dict(
+        title="Farm-fresh groceries, every week.",
+        body="Turn your meal plan into a grocery order with one tap, or build your own basket. We gather, check, pack and deliver, and you can follow each stage in the app and by email.",
+        stages=["Order gathering", "Quality assurance", "Packaged", "En route · 30 min", "Delivered"]),
+    community=dict(
+        title="A community that eats well, together.",
+        body="Join groups for allergies, health conditions, nutrition, and food & craft. Health professionals can sign up as handlers or community leaders. The community is open to everyone, even if you don't use meal planning or grocery delivery.",
+        groups=["Allergies", "Health issues", "Nutrition", "Food & Craft", "Weight goals", "Rehabilitation support"]),
+    boxes=[("basic", "Basic Box", "Staples & vegetables", "Affordable everyday essentials."),
+           ("healthy", "Healthy Box", "Balanced meals", "Portioned ingredients for healthy meals."),
+           ("fitness", "Fitness Box", "High protein", "For fitness and active lifestyles."),
+           ("specialty", "Specialty Box", "Vegan · Diabetic · Gluten-free", "For unique dietary needs and preferences.")],
+    team=[("Nutritionists", "Build and update every meal plan."),
+          ("Supply managers", "Source and manage grocery orders."),
+          ("Quality assurance", "Check every item before it ships."),
+          ("Packaging & delivery", "Pack fresh and deliver on time."),
+          ("Health specialists", "Guide and support the community."),
+          ("Suppliers", "Partner farms that supply fresh produce.")],
+    promise=[("Late delivery?", "Your next delivery is on us."),
+             ("Poor quality?", "We recall it and resupply, fast.")],
+)
+
 # Product categories. Replace the URLs below with the live web-app
 # addresses and store listings as each product launches.
 PRODUCTS = [
@@ -169,13 +211,14 @@ PRODUCTS = [
          ios="https://apps.apple.com/app/airise",
          android="https://play.google.com/store/apps/details?id=com.rehohub.airise",
          screen=("My learning", "78%", "Course progress")),
-    dict(slug="greenfed", name="GreenFed", cat="AgriTech · Food", c1="#2185FF", c2="#0b4f8a", icon="leaf",
-         desc="Invest in farms, buy fresh produce direct from growers and follow your harvest — connecting Africa's farms to its tables through RehoFarm.",
-         feats=["Farm investment", "Fresh marketplace", "Harvest tracking", "Farmer support"],
+    dict(slug="greenfed", name="GreenFed", cat="Food · Nutrition", c1="#7cc242", c2="#0a4a26", icon="leaf",
+         desc="Fresh food, smarter you. Personal meal plans from nutritionists, farm-fresh groceries delivered weekly, and a community for healthier living.",
+         feats=["Meal planning", "Weekly groceries", "Food boxes", "Health community"],
          web="https://greenfed.rehohub.com",
          ios="https://apps.apple.com/app/greenfed",
          android="https://play.google.com/store/apps/details?id=com.rehohub.greenfed",
-         screen=("Portfolio", "+18.4%", "Season returns")),
+         screen=("Meal plan", "1,850 kcal", "Today's target"),
+         page=GREENFED_PAGE),
 ]
 
 # =====================================================================
@@ -234,6 +277,10 @@ def ico(name):
         "code": '<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 4l-4 16"/>',
         "truck": '<path d="M1 4h14v12H1zM15 9h4l4 4v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>',
         "pin": '<path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+        "tag": '<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+        "sprout": '<path d="M12 22V11"/><path d="M12 11C12 7 9 4 4 4c0 4 3 7 8 7zM12 13c0-4 3-7 8-7 0 4-3 7-8 7z"/>',
+        "heart": '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
+        "plan": '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
         "star": '<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
     }
     return f'<svg {s}>{paths[name]}</svg>'
@@ -265,7 +312,7 @@ def head(title, desc, base):
 <link rel="icon" href="{base}assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{base}assets/css/styles.css">
 <script>document.documentElement.classList.remove('no-js')</script>
 </head>
@@ -326,8 +373,10 @@ def footer(base):
 '''
 
 
-def cta_block(email=None, title="Your one-stop hub<br>starts here.", body=None):
+def cta_block(email=None, title="Your one-stop hub<br>starts here.", body=None, phone=None):
     email = email or CONTACT["email"]
+    phone = phone or CONTACT["phone"]
+    phone_href = "tel:" + "".join(ch for ch in phone if ch.isdigit() or ch == "+")
     body = body or "Partner with any Rehohub subsidiary, invest in our ecosystem or bring your next big project to life. Our team responds within one business day."
     return f'''<section class="section" id="contact">
   <div class="container">
@@ -340,7 +389,7 @@ def cta_block(email=None, title="Your one-stop hub<br>starts here.", body=None):
       </div>
       <div class="cta__contact">
         <a href="mailto:{email}">{ico("mail")} {email}</a>
-        <a href="{CONTACT["phone_href"]}">{ico("phone")} {CONTACT["phone"]}</a>
+        <a href="{phone_href}">{ico("phone")} {phone}</a>
         <a href="https://{CONTACT["site"]}">{ico("web")} {CONTACT["site"]}</a>
       </div>
     </div>
@@ -635,6 +684,8 @@ def store_buttons(p):
 
 
 def build_product(p):
+    if p["page"].get("kind") == "greenfed":
+        return build_greenfed(p)
     base = "../"
     d = p["page"]
     slug = p["slug"]
@@ -756,6 +807,162 @@ def build_product(p):
 </section>
 
 {cta_block(d["email"], "Talk to the<br>AiPay team.", "Questions about selling on AiPay, the payment gateway or a student partnership? Write to us and we'll get back to you.")}
+</main>
+'''
+    html += footer(base)
+    (ROOT / "products").mkdir(exist_ok=True)
+    (ROOT / "products" / f"{slug}.html").write_text(html, encoding="utf-8")
+
+
+def build_greenfed(p):
+    base = "../"
+    d = p["page"]
+    slug = p["slug"]
+    img = f"{base}assets/img/{slug}"
+    pillars = "".join(f'<div class="gf-pillar reveal" style="--d:{i * .08:.2f}s"><span>{ico(a)}</span><h3>{escape(b)}</h3><p>{escape(c)}</p></div>' for i, (a, b, c) in enumerate(d["pillars"]))
+    steps = "".join(f'<li class="reveal" style="--d:{i * .06:.2f}s"><b>{i + 1:02d}</b><h3>{escape(a)}</h3><p>{escape(b)}</p></li>' for i, (a, b) in enumerate(d["steps"]))
+    m, g, c = d["meal"], d["grocery"], d["community"]
+    mpoints = "".join(f"<li>{ico('check')}{escape(x)}</li>" for x in m["points"])
+    stages = "".join(f'<li><span>{ico("check")}</span>{escape(x)}</li>' for x in g["stages"])
+    groups = "".join(f"<span>{escape(x)}</span>" for x in c["groups"])
+    boxes = "".join(f'''<article class="gf-box gf-box--{k} reveal" style="--d:{i * .08:.2f}s">
+        <img src="{img}/box-{k}.jpg" alt="GreenFed {escape(n)}" loading="lazy" width="205" height="120">
+        <h3>{escape(n)}</h3><b>{escape(t)}</b><p>{escape(x)}</p></article>''' for i, (k, n, t, x) in enumerate(d["boxes"]))
+    team = "".join(f'<div class="gf-role"><h4>{escape(a)}</h4><p>{escape(b)}</p></div>' for a, b in d["team"])
+    promise = "".join(f'<div class="gf-promise reveal" style="--d:{i * .1:.1f}s"><h3>{escape(a)}</h3><p>{escape(b)}</p></div>' for i, (a, b) in enumerate(d["promise"]))
+    days = "".join(f'<li><span>{dname}</span><i style="width:{w}%"></i><em>{k} kcal</em></li>' for dname, w, k in
+                   [("Mon", 82, "1,820"), ("Tue", 90, "1,900"), ("Wed", 76, "1,760"), ("Thu", 88, "1,880"), ("Fri", 80, "1,810")])
+
+    html = head(f"{p['name']} — {d['tagline']} | Rehohub", d["lead"], base)
+    html += header(base)
+    html += f'''<main id="main" class="product-page theme-gf">
+<section class="gf-hero">
+  <div class="gf-hero__leaf gf-hero__leaf--a" aria-hidden="true">{ico("leaf")}</div>
+  <div class="gf-hero__leaf gf-hero__leaf--b" aria-hidden="true">{ico("leaf")}</div>
+  <div class="container gf-hero__inner">
+    <div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="{base}index.html">Rehohub</a><span>/</span><a href="{base}index.html#products">Products</a><span>/</span><span aria-current="page">{p["name"]}</span></nav>
+      <img class="gf-hero__logo reveal" src="{img}/logo-white.png" alt="GreenFed — Fresh food. Smarter you." width="900" height="517">
+      <h1 class="reveal" style="--d:.08s">Fresh food.<br>Real nutrition.<br><span class="script">Delivered.</span></h1>
+      <p class="hero__lead reveal" style="--d:.16s">{escape(d["lead"])}</p>
+      <div class="hero__ctas reveal" style="--d:.24s">
+        <a class="btn btn--lime" href="{p["web"]}" target="_blank" rel="noopener">Get my meal plan {ico("arrow")}</a>
+        <a class="btn btn--ghost" href="#groceries">Order groceries</a>
+        <a class="btn btn--ghost" href="#community">Join the community</a>
+      </div>
+    </div>
+    <div class="gf-hero__media reveal" style="--d:.2s">
+      <div class="gf-hero__photo"><img src="{img}/hero-box.jpg" alt="A GreenFed box full of fresh vegetables, fruit, eggs and fish" width="694" height="620"></div>
+      <img class="gf-hero__badge" src="{img}/badge.png" alt="" width="480" height="480">
+      <div class="float-chip float-chip--a">{ico("plan")} Meal plan in under 48 hrs</div>
+      <div class="float-chip float-chip--c">{ico("truck")} Fresh, weekly delivery</div>
+    </div>
+  </div>
+</section>
+
+<section class="gf-pillars-wrap">
+  <div class="container gf-pillars">{pillars}</div>
+</section>
+
+<section class="section" id="how">
+  <div class="container">
+    <div class="section__head section__head--split">
+      <div class="reveal"><span class="eyebrow">How it works</span><h2 class="title bar" style="margin-top:16px">From sign-up to<br>your doorstep.</h2></div>
+      <p class="lead reveal" style="--d:.1s">Six simple steps take you from a quick profile to a personal meal plan and fresh groceries every week.</p>
+    </div>
+    <ol class="gf-steps">{steps}</ol>
+  </div>
+</section>
+
+<section class="section section--tint" id="meal-plans">
+  <div class="container show">
+    <div class="show__copy reveal">
+      <span class="eyebrow">Meal planning</span>
+      <h2 class="title bar" style="margin-top:16px">{escape(m["title"])}</h2>
+      <p class="lead" style="margin-top:24px">{escape(m["body"])}</p>
+      <ul class="ticks ticks--grid">{mpoints}</ul>
+    </div>
+    <div class="show__media reveal" style="--d:.1s" aria-hidden="true">
+      <div class="gf-plan">
+        <div class="gf-plan__head"><div><small>Weekly meal plan</small><strong>The Johnson family</strong></div><span>3 plans</span></div>
+        <div class="gf-plan__who"><span class="on">Ade · 34</span><span>Bisi · 31</span><span>Tobi · 9 · nut allergy</span></div>
+        <ul class="gf-plan__days">{days}</ul>
+        <div class="gf-plan__foot"><div><small>Prepared by</small><b>Nutritionist A. Bello</b></div><span class="gf-ok">{ico("check")} Delivered in 36 hrs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="groceries">
+  <div class="container show show--flip">
+    <div class="show__copy reveal">
+      <span class="eyebrow">Grocery delivery</span>
+      <h2 class="title bar" style="margin-top:16px">{escape(g["title"])}</h2>
+      <p class="lead" style="margin-top:24px">{escape(g["body"])}</p>
+      <ul class="ticks" style="margin-top:28px"><li>{ico("check")}Order from your meal plan or by preference</li><li>{ico("check")}Updates by email and in the app</li><li>{ico("check")}Review every stage of the order</li></ul>
+    </div>
+    <div class="show__media reveal" style="--d:.1s">
+      <div class="gf-track" aria-label="Grocery order stages"><div class="gf-track__head"><small>Order #GF-20481</small><strong>Your groceries are on the way</strong></div><ol>{stages}</ol></div>
+    </div>
+  </div>
+</section>
+
+<section class="section gf-boxes-wrap" id="boxes">
+  <div class="container">
+    <div class="section__head" style="text-align:center;justify-items:center">
+      <span class="eyebrow eyebrow--light reveal">Our food boxes</span>
+      <h2 class="title title--light bar bar--light bar--center reveal" style="--d:.08s">A box for every<br>kind of healthy.</h2>
+    </div>
+    <div class="gf-boxes">{boxes}</div>
+  </div>
+</section>
+
+<section class="section" id="community">
+  <div class="container show">
+    <div class="show__copy reveal">
+      <span class="eyebrow">Community</span>
+      <h2 class="title bar" style="margin-top:16px">{escape(c["title"])}</h2>
+      <p class="lead" style="margin-top:24px">{escape(c["body"])}</p>
+      <div class="hero__ctas"><a class="btn btn--green" href="{p["web"]}" target="_blank" rel="noopener">Join the community {ico("arrow")}</a></div>
+    </div>
+    <div class="show__media reveal" style="--d:.1s">
+      <div class="gf-community"><img src="{img}/badge.png" alt="" width="480" height="480"><div class="gf-groups">{groups}</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint" id="team">
+  <div class="container">
+    <div class="section__head section__head--split">
+      <div class="reveal"><span class="eyebrow">The people behind your food</span><h2 class="title bar" style="margin-top:16px">Every order has<br>a team behind it.</h2></div>
+      <p class="lead reveal" style="--d:.1s">Each order moves through specialists, and you can see who picked it up at every stage. Joined the team? Sign up on the employee side with the code in your employment letter.</p>
+    </div>
+    <div class="gf-roles reveal">{team}</div>
+    <div class="gf-promises">{promise}</div>
+  </div>
+</section>
+
+<section class="section" id="brand">
+  <div class="container">
+    <div class="section__head" style="text-align:center;justify-items:center">
+      <span class="eyebrow reveal">Packed with care</span>
+      <h2 class="title bar bar--center reveal" style="--d:.08s">Fresh from the farm,<br>beautifully packed.</h2>
+    </div>
+    <figure class="gf-board reveal"><img src="{img}/brand-board.jpg" alt="GreenFed packaging: insulated bags, produce boxes, cups, pouches, jars, juice bottles, meal-prep containers and stickers" loading="lazy" width="1080" height="720"></figure>
+  </div>
+</section>
+
+<section class="section" id="download" style="padding-top:0;padding-bottom:0">
+  <div class="container">
+    <div class="dl dl--gf reveal">
+      <div><img class="dl__img" src="{img}/badge.png" alt="" width="480" height="480"></div>
+      <div><h2>Get {p["name"]} on any device.</h2><p>Plan meals, order groceries and join the community on the web or on your phone.</p></div>
+      <div class="prod__actions" style="--c1:#2e8b3a;--c2:#0a4a26">{store_buttons(p)}</div>
+    </div>
+  </div>
+</section>
+
+{cta_block(d["email"], "Healthy people.<br>Stronger communities.", "Questions about meal plans, deliveries or joining the GreenFed team? Call or write to us.", d["phone"])}
 </main>
 '''
     html += footer(base)
