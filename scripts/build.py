@@ -30,8 +30,8 @@ CONTACT = {
 # Subsidiaries (Brand Guidelines p.5–9). Each one is a service with its
 # own landing page at services/<slug>.html
 SUBSIDIARIES = [
-    dict(slug="rheti", name="Rheti", tag="Education", layout="wide",
-         tagline="Skills that build careers and companies.",
+    dict(slug="rheti", name="Rheti", tag="Training Institute", layout="wide",
+         tagline="Knowledge. Practice. Impact.",
          desc="A training Institute that is focused on skills acquisition and development training tailored towards entrepreneurship and Business Mentorship. The Institute maximizes the use of technology and digital products in the training of their clients and is focused on reducing unemployment in Africa by increasing employability and entrepreneurship.",
          offers=[("Skills acquisition", "Hands-on, practical programmes that turn ambition into employable, in-demand skills."),
                  ("Business mentorship", "Founders are paired with experienced mentors to plan, launch and scale."),
@@ -639,6 +639,9 @@ CURRENT = ' aria-current="page"'
 
 
 def build_service(idx, s):
+    if s["slug"] == "rheti":
+        import rheti
+        return rheti.build(globals(), idx, s)
     base = "../"
     offers = "".join(
         f'<div class="why__item reveal" style="--d:{i * .08:.2f}s"><span>{i + 1:02d}</span><div class="why__ico">{ico("check")}</div><h3>{escape(t)}</h3><p>{escape(d)}</p></div>'
